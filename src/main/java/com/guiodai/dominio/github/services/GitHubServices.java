@@ -35,8 +35,7 @@ public class GitHubServices extends GitHubHttpConnection {
 	 * 
 	 *             https://developer.github.com/v3/repos/#list-your-repositories
 	 */
-	public List<Repositorio> recuperarRepositorios(String usuario, String senha)
-			throws IOException {
+	public List<Repositorio> recuperarRepositorios(String usuario, String senha) {
 
 		List<Repositorio> repositorios = new ArrayList<Repositorio>();
 		try {

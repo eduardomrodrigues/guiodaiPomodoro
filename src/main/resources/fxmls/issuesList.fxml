@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:controller="com.guiodai.controller.IssuesListController" 
+    xmlns:fx="http://javafx.com/fxml" alignment="center" maxHeight="Infinity" maxWidth="Infinity" styleClass="root"> 
+	
+	<padding>
+		<Insets top="2" right="2" bottom="10" left="2"/>
+	</padding>
+	
+	<gridLinesVisible>true</gridLinesVisible> 
+	
+	<ComboBox fx:id="comboRepositorio" GridPane.columnIndex="0" GridPane.rowIndex="0">
+	</ComboBox>
+	
+	
+       
+    <stylesheets>
+    	<URL value="@issuesList.css" />
+  	</stylesheets>
+
+
+</GridPane>

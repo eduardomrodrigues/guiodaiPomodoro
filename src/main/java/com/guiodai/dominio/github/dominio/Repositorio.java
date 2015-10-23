@@ -13,4 +13,8 @@ public class Repositorio {
 		this.nome = nome;
 	}
 	
+	public String toString(){
+		return this.getNome();
+	}
+	
 }
