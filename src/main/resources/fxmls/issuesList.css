@@ -5,6 +5,17 @@
 }
 
 #comboRepositorio{
+	-fx-font-size: 20px;
+	-fx-cell-size: 1.66667em; 
 	
+}
+
+.fonte-destaque{
+	-fx-font-size: 20px;
+}
+
+.fonte-titulo{
+	-fx-font-size: 30px;
+	-fx-font-weight: bold;
 	
 }

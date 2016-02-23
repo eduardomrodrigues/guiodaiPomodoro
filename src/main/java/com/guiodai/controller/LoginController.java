@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.guiodai.dominio.github.dominio.UsuarioGithub;
 import com.guiodai.dominio.github.services.GitHubServices;
 
 public class LoginController {
@@ -29,6 +30,15 @@ public class LoginController {
 	@FXML
 	private PasswordField passwordField;
 
+	
+	@FXML
+	void initialize(){
+		userName.setText("eduardom.rodrigues@gmail.com");
+		passwordField.setText("B1p1000M");
+	}
+	
+	
+	
 	@FXML
 	protected void handleSubmitButtonAction(ActionEvent event) {
 		if (!this.isFormValid()) {
@@ -51,9 +61,14 @@ public class LoginController {
 			Parent issueListParent = fxmlLoader.load();
 			
 			IssuesListController issuesController = fxmlLoader.getController();
-			issuesController.setUsuario(userName.getText());
+			
+			UsuarioGithub usuario = services.recuperarUsuario(userName.getText(), passwordField.getText());
+	
+			issuesController.setUsuario(usuario.getLogin());
 			issuesController.setSenha(passwordField.getText());
+			
 			issuesController.carregarComboRepositorios();
+			issuesController.adicionarComboListeners();
 			
 			Rectangle2D rectangle2D = Screen.getPrimary().getVisualBounds();
 			Scene issueListScene = new Scene(issueListParent, rectangle2D.getWidth() / 2, rectangle2D.getHeight() / 2);

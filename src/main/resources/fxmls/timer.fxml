@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:controller="com.guiodai.controller.TimerController" 
+    xmlns:fx="http://javafx.com/fxml" alignment="center" maxHeight="Infinity" maxWidth="Infinity" styleClass="root"> 
+
+	
+	<gridLinesVisible>true</gridLinesVisible> 
+	
+	
+	<Label styleClass="fonte-titulo" 
+		fx:id="labelTimer"                
+        GridPane.columnIndex="0" GridPane.rowIndex="0"
+        GridPane.columnSpan="5"
+        GridPane.halignment="CENTER">
+        
+    </Label>
+    
+      <Label styleClass="fonte-clock" 
+		fx:id="hourClock"                
+        GridPane.columnIndex="0" GridPane.rowIndex="1">
+    </Label>
+    
+     <Label styleClass="fonte-clock" 
+        text=":"
+        GridPane.columnIndex="1" GridPane.rowIndex="1">
+    </Label>
+    
+    <Label styleClass="fonte-clock" 
+		fx:id="minuteClock"                
+        GridPane.columnIndex="2" GridPane.rowIndex="1">
+    </Label>
+    
+    <Label styleClass="fonte-clock" 
+        text=":"
+        GridPane.columnIndex="3" GridPane.rowIndex="1">
+    </Label>
+    
+    
+    <Label styleClass="fonte-clock" 
+		fx:id="secondClock"                
+        GridPane.columnIndex="4" GridPane.rowIndex="1">
+    </Label>
+    
+	
+	
+	
+	 <stylesheets>
+    	<URL value="@timer.css" />
+  	</stylesheets>
+
+
+</GridPane>

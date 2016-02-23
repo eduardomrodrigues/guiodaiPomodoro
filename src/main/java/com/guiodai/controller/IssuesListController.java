@@ -1,16 +1,44 @@
 package com.guiodai.controller;
 
+import java.io.IOException;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import org.omg.IOP.MultipleComponentProfileHelper;
 
+import com.guiodai.dominio.github.dominio.Issue;
 import com.guiodai.dominio.github.dominio.Repositorio;
 import com.guiodai.dominio.github.services.GitHubServices;
 
-public class IssuesListController{
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.event.Event;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
+import javafx.stage.*;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+public class IssuesListController {
+
+	@FXML
+	void initialize() {
+		gitHub = new GitHubServices();
+		dataIssue = FXCollections.observableArrayList();
+		columnTitle.setCellValueFactory(new PropertyValueFactory<Issue, String>("title"));
+		this.adicionarTableViewListeners();
+	}
+
+	private GitHubServices gitHub;
 
 	private String usuario;
 
@@ -18,14 +46,76 @@ public class IssuesListController{
 
 	@FXML
 	private ComboBox<Repositorio> comboRepositorio;
-	
+
+	@FXML
+	private TableView<Issue> tableViewIssues;
+
+	@FXML
+	private TableColumn columnTitle;
+
+	private ObservableList<Issue> dataIssue;
+
+	private void adicionarTableViewListeners() {
+		tableViewIssues.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+
+				if (event.getClickCount() > 1) {
+					abrirTimer(tableViewIssues.getSelectionModel().getSelectedItem());
+				}
+			}
+		});
+	}
+
+	private void abrirTimer(Issue issue) {
+
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxmls/timer.fxml"));
+			Parent timerParent = fxmlLoader.load();
+
+			TimerController timerController = fxmlLoader.getController();
+			timerController.setIssue(issue);
+			timerController.inicializar();
+			
+			Stage stage = new Stage();
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(comboRepositorio.getScene().getWindow());
+			stage.setTitle("Pomodoro for issue #" + issue.getId());
+			stage.setScene(new Scene(timerParent, 650, 450));
+			stage.show();
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void carregarComboRepositorios() {
 		GitHubServices services = new GitHubServices();
 
-		List<Repositorio> repositorios = services.recuperarRepositorios(
-				usuario, senha);
-		ObservableList<Repositorio> observableRepositoriosList  = FXCollections.observableArrayList(repositorios);
+		List<Repositorio> repositorios = services.recuperarRepositorios(usuario, senha);
+		ObservableList<Repositorio> observableRepositoriosList = FXCollections.observableArrayList(repositorios);
 		comboRepositorio.setItems(observableRepositoriosList);
+
+	}
+
+	public void adicionarComboListeners() {
+
+		comboRepositorio.valueProperty().addListener(new ChangeListener<Repositorio>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Repositorio> observable, Repositorio oldValue,
+					Repositorio newValue) {
+
+				dataIssue.clear();
+
+				List<Issue> issues = gitHub.recuperarIssues(usuario, senha, newValue.getNome());
+				dataIssue.addAll(issues);
+				tableViewIssues.setItems(dataIssue);
+
+			}
+		});
 
 	}
 
