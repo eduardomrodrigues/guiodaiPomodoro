@@ -60,7 +60,8 @@
     </HBox>
    
     <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" alignment="CENTER" >
-    	<Button id="buttonPlay" fx:id="playButton" alignment="CENTER" >
+    	<Button id="buttonPlay" fx:id="playButton" alignment="CENTER" 
+    		onAction="#handlePlayButtonAction">
 			<graphic>
 				<ImageView>
 					<image>
@@ -70,7 +71,8 @@
 			</graphic>
 		</Button>
 		
-		<Button id="buttonStop" fx:id="stopButton" alignment="CENTER" >
+		<Button id="buttonStop" fx:id="stopButton" alignment="CENTER" 
+			onAction="#handleStopButtonAction">
 			<graphic>
 				<ImageView>
 					<image>
