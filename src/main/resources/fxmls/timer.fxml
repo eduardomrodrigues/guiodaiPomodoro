@@ -5,21 +5,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <GridPane fx:controller="com.guiodai.controller.TimerController" 
     xmlns:fx="http://javafx.com/fxml" alignment="center" maxHeight="Infinity" maxWidth="Infinity" styleClass="root"> 
 
 	
-	<gridLinesVisible>true</gridLinesVisible> 
+	<gridLinesVisible>false</gridLinesVisible> 
 	
 	
 	<Label styleClass="fonte-titulo" 
 		fx:id="labelTimer"                
         GridPane.columnIndex="0" GridPane.rowIndex="0"
-        GridPane.columnSpan="5"
-        GridPane.halignment="CENTER">
+        GridPane.halignment="CENTER"
+        maxWidth="Infinity" >
+        
+        <GridPane.margin>
+               <Insets bottom="40.0" left="0.0" right="0.0" top="0.0" />
+        </GridPane.margin>
         
     </Label>
+     
+     <HBox spacing="10" alignment="CENTER" 
+        GridPane.columnIndex="0" GridPane.rowIndex="1">
+    	<GridPane.margin>
+               <Insets bottom="40.0" left="0.0" right="0.0" top="0.0" />
+        </GridPane.margin>
     
       <Label styleClass="fonte-clock" 
 		fx:id="hourClock"                
@@ -46,7 +57,30 @@
 		fx:id="secondClock"                
         GridPane.columnIndex="4" GridPane.rowIndex="1">
     </Label>
+    </HBox>
+   
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" alignment="CENTER" >
+    	<Button id="buttonPlay" fx:id="playButton" alignment="CENTER" >
+			<graphic>
+				<ImageView>
+					<image>
+						<Image url="/img/play.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
+		
+		<Button id="buttonStop" fx:id="stopButton" alignment="CENTER" >
+			<graphic>
+				<ImageView>
+					<image>
+						<Image url="/img/stop.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</Button>
     
+    </HBox>
 	
 	
 	

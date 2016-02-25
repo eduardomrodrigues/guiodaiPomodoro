@@ -82,7 +82,7 @@ public class IssuesListController {
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initOwner(comboRepositorio.getScene().getWindow());
 			stage.setTitle("Pomodoro for issue #" + issue.getId());
-			stage.setScene(new Scene(timerParent, 650, 450));
+			stage.setScene(new Scene(timerParent, 1250, 550));
 			stage.show();
 			
 			
