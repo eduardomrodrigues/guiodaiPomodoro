@@ -32,31 +32,11 @@
                <Insets bottom="40.0" left="0.0" right="0.0" top="0.0" />
         </GridPane.margin>
     
-      <Label styleClass="fonte-clock" 
-		fx:id="hourClock"                
-        GridPane.columnIndex="0" GridPane.rowIndex="1">
-    </Label>
-    
-     <Label styleClass="fonte-clock" 
-        text=":"
-        GridPane.columnIndex="1" GridPane.rowIndex="1">
-    </Label>
-    
-    <Label styleClass="fonte-clock" 
-		fx:id="minuteClock"                
-        GridPane.columnIndex="2" GridPane.rowIndex="1">
-    </Label>
-    
-    <Label styleClass="fonte-clock" 
-        text=":"
-        GridPane.columnIndex="3" GridPane.rowIndex="1">
-    </Label>
-    
-    
-    <Label styleClass="fonte-clock" 
-		fx:id="secondClock"                
-        GridPane.columnIndex="4" GridPane.rowIndex="1">
-    </Label>
+    	  <Label styleClass="fonte-clock" 
+			fx:id="clock"                
+        	GridPane.columnIndex="0" GridPane.rowIndex="1"
+        	GridPane.halignment="CENTER">
+	    </Label>
     </HBox>
    
     <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" alignment="CENTER" >
