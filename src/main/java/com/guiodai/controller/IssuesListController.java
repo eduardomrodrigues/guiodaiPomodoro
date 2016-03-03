@@ -7,7 +7,9 @@ import org.omg.IOP.MultipleComponentProfileHelper;
 
 import com.guiodai.dominio.github.dominio.Issue;
 import com.guiodai.dominio.github.dominio.Repositorio;
+import com.guiodai.dominio.github.dominio.UsuarioGithub;
 import com.guiodai.dominio.github.services.GitHubServices;
+import com.guiodai.dominio.guiodai.services.GuiodaiServices;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,6 +37,7 @@ public class IssuesListController {
 		gitHub = new GitHubServices();
 		dataIssue = FXCollections.observableArrayList();
 		columnTitle.setCellValueFactory(new PropertyValueFactory<Issue, String>("title"));
+		columnPomodoroNumber.setCellValueFactory(new PropertyValueFactory<Issue, Integer>("pomodoros"));
 		this.adicionarTableViewListeners();
 	}
 
@@ -43,6 +46,8 @@ public class IssuesListController {
 	private String usuario;
 
 	private String senha;
+	
+	private UsuarioGithub usuarioGithub;
 
 	@FXML
 	private ComboBox<Repositorio> comboRepositorio;
@@ -52,6 +57,10 @@ public class IssuesListController {
 
 	@FXML
 	private TableColumn columnTitle;
+	
+	@FXML
+	private TableColumn columnPomodoroNumber;
+
 
 	private ObservableList<Issue> dataIssue;
 
@@ -111,6 +120,7 @@ public class IssuesListController {
 				dataIssue.clear();
 
 				List<Issue> issues = gitHub.recuperarIssues(usuario, senha, newValue.getNome());
+				setPomodoroNumbers(issues);
 				dataIssue.addAll(issues);
 				tableViewIssues.setItems(dataIssue);
 
@@ -119,6 +129,16 @@ public class IssuesListController {
 
 	}
 
+	private void setPomodoroNumbers(List<Issue> issues){
+		
+		GuiodaiServices services = new GuiodaiServices();
+		
+		for(Issue i : issues){
+			i.setPomodoros(services.recuperarPomodoro(usuarioGithub.getId(), i.getId()).getPomodoros());
+		}
+	}
+	
+	
 	public String getUsuario() {
 		return usuario;
 	}
@@ -133,6 +153,10 @@ public class IssuesListController {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public void setUsuarioGithub(UsuarioGithub usuarioGithub) {
+		this.usuarioGithub = usuarioGithub;
 	}
 
 }

@@ -11,12 +11,21 @@ public class GuiodaiServices {
 
 	public PomodoroIssue recuperarPomodoro(Long userId, Long issueId) {
 
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client
-				.target("http://www.guiodai.com/pomodoro/services/pomodoro/userid/" + userId + "/issueid/" + issueId);
+		PomodoroIssue p = new PomodoroIssue();
+		p.setPomodoros(0);
+		p.setIssueId(issueId);
+		p.setUserId(userId);
+		
+		try {
 
-		PomodoroIssue p = target.request(MediaType.APPLICATION_JSON_TYPE).get(PomodoroIssue.class);
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(
+					"http://www.guiodai.com/pomodoro/services/pomodoro/userid/" + userId + "/issueid/" + issueId);
 
+			p = target.request(MediaType.APPLICATION_JSON_TYPE).get(PomodoroIssue.class);
+		} catch (Exception e) {
+
+		}
 		return p;
 
 	}
@@ -30,7 +39,8 @@ public class GuiodaiServices {
 		form.param("userId", "" + userId);
 		form.param("issueId", "" + issueId);
 
-		target.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+		target.request(MediaType.APPLICATION_JSON_TYPE)
+				.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
 	}
 

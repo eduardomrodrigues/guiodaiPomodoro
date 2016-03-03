@@ -4,6 +4,16 @@ public class Issue {
 
 	private Long id;
 
+	private Integer pomodoros;
+
+	public Integer getPomodoros() {
+		return pomodoros;
+	}
+
+	public void setPomodoros(Integer pomodoros) {
+		this.pomodoros = pomodoros;
+	}
+
 	public Long getId() {
 		return id;
 	}

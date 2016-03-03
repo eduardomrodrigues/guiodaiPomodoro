@@ -64,6 +64,7 @@ public class LoginController {
 			
 			UsuarioGithub usuario = services.recuperarUsuario(userName.getText(), passwordField.getText());
 	
+			issuesController.setUsuarioGithub(usuario);
 			issuesController.setUsuario(usuario.getLogin());
 			issuesController.setSenha(passwordField.getText());
 			
