@@ -10,6 +10,8 @@ import com.guiodai.dominio.github.dominio.Repositorio;
 import com.guiodai.dominio.github.dominio.UsuarioGithub;
 import com.guiodai.dominio.github.services.GitHubServices;
 import com.guiodai.dominio.guiodai.services.GuiodaiServices;
+import com.guiodai.dominio.guiodai.services.PomodoroIssue;
+import com.guiodai.dominio.guiodai.services.PomodoroNotFoundException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -61,6 +63,7 @@ public class IssuesListController {
 	@FXML
 	private TableColumn columnPomodoroNumber;
 
+	private String repoName;
 
 	private ObservableList<Issue> dataIssue;
 
@@ -85,12 +88,15 @@ public class IssuesListController {
 
 			TimerController timerController = fxmlLoader.getController();
 			timerController.setIssue(issue);
+			timerController.setUserId(usuarioGithub.getId());
+			timerController.setIssueController(this);
+			timerController.setRepoName(repoName);
 			timerController.inicializar();
 			
 			Stage stage = new Stage();
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initOwner(comboRepositorio.getScene().getWindow());
-			stage.setTitle("Pomodoro for issue #" + issue.getId());
+			stage.setTitle("Pomodoro for issue " + issue.getId());
 			stage.setScene(new Scene(timerParent, 1250, 550));
 			stage.show();
 			
@@ -117,11 +123,10 @@ public class IssuesListController {
 			public void changed(ObservableValue<? extends Repositorio> observable, Repositorio oldValue,
 					Repositorio newValue) {
 
-				dataIssue.clear();
 
-				List<Issue> issues = gitHub.recuperarIssues(usuario, senha, newValue.getNome());
-				setPomodoroNumbers(issues);
-				dataIssue.addAll(issues);
+				refreshTabela(newValue.getNome());
+				repoName = newValue.getNome();
+				
 				tableViewIssues.setItems(dataIssue);
 
 			}
@@ -129,12 +134,33 @@ public class IssuesListController {
 
 	}
 
+	public void refreshTabela(String repo){
+		
+		dataIssue.clear();
+		
+		List<Issue> issues = gitHub.recuperarIssues(usuario, senha, repo);
+		setPomodoroNumbers(issues);
+		dataIssue.addAll(issues);
+		
+	}
+	
+	
 	private void setPomodoroNumbers(List<Issue> issues){
 		
 		GuiodaiServices services = new GuiodaiServices();
 		
 		for(Issue i : issues){
-			i.setPomodoros(services.recuperarPomodoro(usuarioGithub.getId(), i.getId()).getPomodoros());
+			
+			PomodoroIssue p = new PomodoroIssue();
+			try {
+				p = services.recuperarPomodoro(usuarioGithub.getId(), i.getId());
+			} catch (PomodoroNotFoundException e) {
+				p.setIssueId(i.getId());
+				p.setPomodoros(0);
+				p.setUserId(usuarioGithub.getId());
+			
+			}
+			i.setPomodoros(p.getPomodoros());
 		}
 	}
 	

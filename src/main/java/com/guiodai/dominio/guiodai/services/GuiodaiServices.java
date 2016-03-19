@@ -9,13 +9,9 @@ import javax.ws.rs.core.MediaType;
 
 public class GuiodaiServices {
 
-	public PomodoroIssue recuperarPomodoro(Long userId, Long issueId) {
+	public PomodoroIssue recuperarPomodoro(Long userId, Long issueId) throws PomodoroNotFoundException {
 
 		PomodoroIssue p = new PomodoroIssue();
-		p.setPomodoros(0);
-		p.setIssueId(issueId);
-		p.setUserId(userId);
-		
 		try {
 
 			Client client = ClientBuilder.newClient();
@@ -23,8 +19,8 @@ public class GuiodaiServices {
 					"http://www.guiodai.com/pomodoro/services/pomodoro/userid/" + userId + "/issueid/" + issueId);
 
 			p = target.request(MediaType.APPLICATION_JSON_TYPE).get(PomodoroIssue.class);
-		} catch (Exception e) {
-
+		} catch (javax.ws.rs.NotFoundException e) {
+			throw new PomodoroNotFoundException();
 		}
 		return p;
 
@@ -33,6 +29,7 @@ public class GuiodaiServices {
 	public void incrementarPomodoro(Long userId, Long issueId) {
 
 		Client client = ClientBuilder.newClient();
+
 		WebTarget target = client.target("http://www.guiodai.com/pomodoro/services/pomodoro");
 
 		Form form = new Form();

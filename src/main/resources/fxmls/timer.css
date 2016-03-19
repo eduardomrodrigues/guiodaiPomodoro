@@ -8,5 +8,10 @@
 	-fx-font-size: 50px;
 	-fx-font-weight: bold;
 	-fx-font-family: "Arial Narrow";
-	-fx-font-color: #61a2b1;
+	
+}
+
+.fonte-break{
+	-fx-font-weight: bold;
+	-fx-font-size: 35px;
 }
