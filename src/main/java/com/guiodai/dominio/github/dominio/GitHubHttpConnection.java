@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -18,7 +19,6 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.h2.util.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -76,7 +76,7 @@ public abstract class GitHubHttpConnection {
 				}
 				
 				String returnJson = EntityUtils.toString(response.getEntity());
-				if(200 == status && StringUtils.isNullOrEmpty(returnJson)){
+				if(200 == status && StringUtils.isEmpty(returnJson)){
 					return new ArrayList<JSONObject>();
 				}
 				

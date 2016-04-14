@@ -17,18 +17,14 @@ public class GitHubServices extends GitHubHttpConnection {
 
 	public boolean login(String usuario, String senha) {
 
-		// FIXME: Drop on production
-
+		try {
+			super.gitGet("https://api.github.com/user", usuario, senha);
+		} catch (UnauthorizedException e) {
+			return false;
+		} catch (BadRequestException e) {
+			e.printStackTrace();
+		}
 		return true;
-
-		// try {
-		// super.gitGet("https://api.github.com/user", usuario, senha);
-		// } catch (UnauthorizedException e) {
-		// return false;
-		// } catch (BadRequestException e) {
-		// e.printStackTrace();
-		// }
-		// return true;
 
 	}
 
