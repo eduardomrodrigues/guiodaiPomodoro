@@ -3,7 +3,6 @@ package com.guiodai.controller;
 import java.time.LocalTime;
 import java.util.List;
 
-import com.guiodai.dominio.Cronometro;
 import com.guiodai.dominio.github.dominio.Issue;
 import com.guiodai.dominio.github.services.GitHubServices;
 import com.guiodai.dominio.guiodai.services.GuiodaiServices;
@@ -33,8 +32,6 @@ public class TimerController {
 
 	private boolean breakTime = false;
 
-	private Cronometro cronometro = new Cronometro();
-
 	private GitHubServices gitHub;
 
 	private IssuesListController issueController;
@@ -43,9 +40,9 @@ public class TimerController {
 
 	private Thread th;
 
-	private static final int POMODORO_TIME_FINISHED = 10;
+	private static final int POMODORO_TIME_FINISHED = 25 * 60;
 
-	private static final int POMODORO_BREAK_TIME = 5;
+	private static final int POMODORO_BREAK_TIME = 5 * 60;
 
 	private String repoName;
 
@@ -129,11 +126,8 @@ public class TimerController {
 			PomodoroIssue pIssue = services.recuperarPomodoro(userId, issue.getId());
 			return pIssue.getPomodoros();
 		} catch (PomodoroNotFoundException e) {
-			e.printStackTrace();
+			return 0;
 		}
-
-		return null;
-
 	}
 
 	private String formatTime(Integer seconds) {
